@@ -11,12 +11,12 @@ const Home = ({name, setName, fetchQuestions}) => {
   const handleSubmit = ()=>{
     if(!name){
       setError(true)
-      return
+      return;
     } 
     else{
       setError(false)
       fetchQuestions()
-      navigate.pushState("/quiz")
+      navigate("/quiz")
     }
   }
 
