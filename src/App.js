@@ -2,7 +2,7 @@ import "./App.css";
 import Header from './components/Header/Header'
 import Home from './Pages/Home/Home';
 import Quiz from './Pages/Quiz/Quiz';
-import Results from './Pages/Results/Results';
+import Result from "./Pages/Result/Result";
 import { useState } from 'react';
 import { Footer } from "./components/Footer/Footer";
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
@@ -40,7 +40,10 @@ function App() {
             setScore={setScore}
             setQuestions={setQuestions}/>}
           />
-          <Route exact path="/results" element={<Results/>}/>
+          <Route exact path="/result"
+            element={<Result
+            score = {score}/>}
+          />
         </Routes>
 
 
