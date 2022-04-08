@@ -26,12 +26,26 @@
     justify-content: space-around;
     margin: 10px;
   }
-  
+
+
+
+
+
   .singleOption {
     width: 46%;
     height: 50px;
     padding: 15px 20px;
     margin: 10px;
+    box-shadow: 0 0 2px black;
+  }
+
+
+  .helpOption {
+    width: 30%;
+    height: 50px;
+    padding: 10px 20px;
+    margin: 10px;
+    line-height: normal;
     box-shadow: 0 0 2px black;
   }
   

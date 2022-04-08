@@ -1,20 +1,17 @@
-import { Button } from "@material-ui/core";
-import { useEffect } from "react";
-import {useNavigate} from "react-router-dom"
+import { Button} from "@material-ui/core";
+import Table from "../../components/Table/Table";
 import "./Result.css";
 
-const Result = ({ name, score }) => {
-  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (!name) {
-  //     navigate("/");
-  //   }
-  // }, [name, navigate]);
+const colNames = ["Date", "Name", "Score"]
 
-  return (
+const Result = ({ name, score, setTable, table}) => {
+    return (
     <div className="result">
+    
       <span className="title">Final Score : {score}</span>
+      {/* <Table list = {table} colNames={colNames}/> */}
+      <Table list = {table} colNames={colNames}/>
       <Button
         variant="contained"
         color="secondary"

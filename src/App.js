@@ -9,16 +9,22 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import axios from "axios";
 
 
+//fsdfsfsd
 function App() {
   const [name, setName] = useState()
   const [questions, setQuestions] = useState()
   const [score, setScore] = useState(0)
-
+  const [table, setTable] = useState()
 
   const fetchQuestions = async () =>{
-
-    const {data} = await axios.get('https://opentdb.com/api.php?amount=100');
+    const {data} = await axios.get('https://opentdb.com/api.php?amount=5');
     setQuestions(data.results)
+  } 
+
+  const fetchTable = async () =>{
+    const url = 'https://gsx2json.com/api?id=1Ods-VtLk9CpM3wR2SwSZywLmJphAyrjUL7vsldFUvOE&sheet=Sheet1'
+    const {data} = await axios.get(url);
+    setTable(data.rows)
   } 
 
   return (
@@ -30,7 +36,8 @@ function App() {
           <Route exact path="/"
             element={<Home name={name}
             setName={setName}
-            fetchQuestions={fetchQuestions}/>}
+            fetchQuestions={fetchQuestions}
+            fetchTable={fetchTable}/>}
           />
           <Route exact path="/quiz"
             element={<Quiz
@@ -38,11 +45,15 @@ function App() {
             questions={questions}
             score = {score}
             setScore={setScore}
-            setQuestions={setQuestions}/>}
+            setQuestions={setQuestions}
+            />}
           />
           <Route exact path="/result"
             element={<Result
-            score = {score}/>}
+            score = {score}
+            table={table}
+            setTable ={setTable}
+            />}
           />
         </Routes>
 

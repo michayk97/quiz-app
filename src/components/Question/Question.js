@@ -2,9 +2,10 @@ import { useState } from "react";
 import {useNavigate} from "react-router-dom"
 import "./Question.css";
 import Countdown from 'react-countdown';
+import { Button } from "@material-ui/core";
+import React, { Component }  from 'react';
 
-
-
+let maxHelp = 1;
 const Question = ({
   currQues,
   setCurrQues,
@@ -12,11 +13,11 @@ const Question = ({
   options,
   correct,
   setScore,
-  score
+  score,
+  table
 }) => {
   const [selected, setSelected] = useState();
 
-  console.log(questions);
 
   const navigate = useNavigate();
 
@@ -39,15 +40,42 @@ const Question = ({
     } 
 
   };
-  
-  const handleNext = (currQues) => {
+  const handleNext = (currQues, fetchTable) => {
     if (currQues+1 == Object.keys(questions).length) {
+      
       navigate("/result");
     } else  {
       setCurrQues(currQues + 1);
       setSelected();
     } 
   };
+
+
+  const handleHelp50 = (currQues)=>{
+    
+    let options = Array.from(document.querySelectorAll(".singleOption"))
+    if(options.length ===2 ||maxHelp===0){
+      console.log("shot")
+      return}
+    maxHelp--
+    let random
+    let counter = 0
+    let deselect = []
+    while(counter<2){
+      random = Math.floor(Math.random() * 3) + 1
+      if(questions[currQues].correct_answer !== options[random].innerText &&
+        !deselect.includes(random)){
+        deselect.push(random)
+        counter ++
+      }
+    }
+
+    for (let index = 0; index < 2; index++) {
+      options[deselect[index]].disabled="true"
+    }
+
+    setSelected()
+  }
 
 
   const renderer = ({seconds, completed }) => {
@@ -74,8 +102,8 @@ const Question = ({
         <span>
           Time to answe:
           {<Countdown
-            key={Date.now() + 5000}
-            date={Date.now() + 5000}
+            key={Date.now() + 100000}
+            date={Date.now() + 100000}
             renderer={renderer}
             autoStart={true}
 
@@ -83,7 +111,8 @@ const Question = ({
         </span>
       
         <h2>{questions[currQues].question}</h2>
-        <div className="options">
+        
+        <div className="options" >
           {options &&
             options.map((i) => (
               <button
@@ -93,7 +122,13 @@ const Question = ({
                 disabled={selected}>
                 {i}
               </button>
-            ))}
+            )
+            )}
+              <button className="helpOption" type="image" 
+                onClick={() => {handleHelp50(currQues, options)}}>
+                50:50 <br></br> You have {maxHelp} life lines left
+              </button>
+
         </div>
         </div>
       </div>

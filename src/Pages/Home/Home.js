@@ -3,8 +3,9 @@ import './Home.css'
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage'
 import { useState } from 'react';
 import {useNavigate} from "react-router-dom"
+import React from 'react';
 
-const Home = ({name, setName, fetchQuestions}) => {
+const Home = ({name, setName, fetchQuestions, fetchTable}) => {
   const [error, setError] = useState(false)
   const navigate= useNavigate();
 
@@ -16,6 +17,7 @@ const Home = ({name, setName, fetchQuestions}) => {
     else{
       setError(false)
       fetchQuestions()
+      fetchTable()
       navigate("/quiz")
     }
   }
@@ -25,10 +27,11 @@ const Home = ({name, setName, fetchQuestions}) => {
   return (
     <div className='content'>
       <div className='settings'>
-        <span style={{ fontSize:30 }}>Main Manu</span>
+        <span style={{ fontSize:30 }}>Welcome to the - QUIZ</span>
+        
       
         <div className='settings_select'>
-          {error && <ErrorMessage>Please Fill all the feilds</ErrorMessage>}
+          {error && <ErrorMessage>Please Fill all the fields</ErrorMessage>}
           <TextField
             style={{marginBottom:25}}
             label='Enter Your Name'

@@ -1,7 +1,8 @@
-// Add Timer
-// Add Results Page
-// Adventure Mode]
-
-
-
-//TIMER GIVE POINTS
+//  const fetchTable = async () =>{
+//     // const what = await fetch(url).then(response => response.json())
+//     // .then(data => console.log(data));
+  
+//     const {data} = await axios.get(url);
+//     console.log(data)
+//     return {data}.rows
+//   } 
