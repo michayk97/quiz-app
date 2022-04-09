@@ -24,10 +24,14 @@ const Home = ({ name, setName, fetchQuestions, fetchTable }) => {
   return (
     <div className="content">
       <div className="settings">
-        <h1 style={{margin:"10px"}}>Welcome to the - QUIZ</h1>
-        <h3 style={{margin:"10px"}}>This is how the game goes: </h3>
-        <p style={{margin:"10px"}} >You have 20 questions, 4 - 50:50 (if its a true / false question you cant use a lifeline) lifelines and 7 seconds to answer a question<br></br><br></br>(if its a true / false question you cant use a lifeline)</p>
-        <span style={{fontSize:"30px", margin:"10px"}}>LETS GOO</span>
+        <h1 style={{ margin: "10px" }}>siiiiiiiWelcome to THE QUIZ</h1>
+        <h3 style={{ margin: "10px" }}>This is how the game goes: </h3>
+        <p style={{ margin: "10px" }}>
+          You have 20 questions with 7 seconds for each question.
+          <br></br> You have 4 lifelines, each one is a 50:50 lifeline, that can
+          only be used in a multiple choice question<br></br>
+        </p>
+        <span style={{ fontSize: "30px", margin: "10px" }}>LET'S GOOOOO!!</span>
         <div className="settings_select">
           {error && <ErrorMessage>Please Fill all the fields</ErrorMessage>}
           <TextField
