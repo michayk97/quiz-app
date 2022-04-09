@@ -24,7 +24,7 @@ const Home = ({ name, setName, fetchQuestions, fetchTable }) => {
   return (
     <div className="content">
       <div className="settings">
-        <h1 style={{ margin: "10px" }}>siiiiiiiWelcome to THE QUIZ</h1>
+        <h1 style={{ margin: "10px" }}>siiissiiiiWelcome to THE QUIZ</h1>
         <h3 style={{ margin: "10px" }}>This is how the game goes: </h3>
         <p style={{ margin: "10px" }}>
           You have 20 questions with 7 seconds for each question.
