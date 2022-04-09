@@ -1,6 +1,8 @@
 function Table({ list, colNames, width = "auto", height = "auto" }) {
   return (
-    <div style={{ width: "50%", boxShadow: "3px 6px 3px #ccc",  margin: "auto"}}>
+    <div
+      style={{ width: "50%", boxShadow: "3px 6px 3px #ccc", margin: "auto" }}
+    ><p style={{fontSize:"30px"}}>Leaderboard</p>
       {list.length > 0 && (
         <table
           cellSpacing="0"
@@ -25,7 +27,7 @@ function Table({ list, colNames, width = "auto", height = "auto" }) {
         </table>
       )}
     </div>
-  )
+  );
 }
 
-export default Table
+export default Table;

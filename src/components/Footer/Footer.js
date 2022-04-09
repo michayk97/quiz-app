@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 export const Footer = () => {
   return (
-    <div style={{textAlign:'center', marginBottom:10}}>
-        Michay Kalika
-    </div>
-  )
-}
+    <div style={{ textAlign: "center", marginBottom: 10 }}>Michay Kalika</div>
+  );
+};

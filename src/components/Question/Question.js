@@ -1,25 +1,29 @@
 import { useState } from "react";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import "./Question.css";
-import Countdown from 'react-countdown';
-import React from 'react';
+import Countdown from "react-countdown";
+import React from "react";
+import { CircularProgress } from "@material-ui/core";
 
-const url = 'https://script.google.com/macros/s/AKfycbyzZgsQmkx11Iok2Z0gpZsPydmC4tRpb4cMJIYS7E_NdRFzY8yU04qaC_LN-9GIKNLGyg/exec'
+const url =
+  "https://script.google.com/macros/s/AKfycbyzZgsQmkx11Iok2Z0gpZsPydmC4tRpb4cMJIYS7E_NdRFzY8yU04qaC_LN-9GIKNLGyg/exec";
 
 const sendData = (name, score, cb) => {
-  console.log('name', name);
-  let date = new Date()
-  const dataForm = new FormData()
-  dataForm.append('date', date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate())
-  dataForm.append('name', name)
-  dataForm.append('scores', 10000)
-  fetch(url,{
-    method:"POST",
-    body: dataForm
-  }).then(cb)
-}
+  let date = new Date();
+  const dataForm = new FormData();
+  dataForm.append(
+    "date",
+    date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate()
+  );
+  dataForm.append("name", name);
+  dataForm.append("scores", score);
+  fetch(url, {
+    method: "POST",
+    body: dataForm,
+  }).then(console.log("T")).then(cb);
+};
 
-let maxHelp = 1;
+let maxHelp = 4;
 const Question = ({
   currQues,
   setCurrQues,
@@ -30,10 +34,9 @@ const Question = ({
   name,
   score,
   setTable,
-  table
+  table,
 }) => {
   const [selected, setSelected] = useState();
-
 
   const navigate = useNavigate();
 
@@ -44,92 +47,65 @@ const Question = ({
   };
 
   const handleCheck = (i, currQues, isTimerOver) => {
-    setTimeout(()=>{
-      handleNext(currQues)
-    },500);
+    setTimeout(() => {
+      handleNext(currQues);
+    }, 500);
     setSelected(i);
-    if (i === correct && isTimerOver!==true){
-      if(questions[currQues].difficulty==="easy") setScore(score + 1);
-      else if(questions[currQues].difficulty==="medium") setScore(score + 2);
-      else if(questions[currQues].difficulty==="hard") setScore(score + 3);
-
-    } 
-
-    function addCurrGame (name, table) {
-      let date = new Date()
-      let obj = {wha:date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate(), name:name, score : 10000}
-      table.push(obj)
-      return table
+    if (i === correct && isTimerOver !== true) {
+      if (questions[currQues].difficulty === "easy") setScore(score + 1);
+      else if (questions[currQues].difficulty === "medium") setScore(score + 2);
+      else if (questions[currQues].difficulty === "hard") setScore(score + 3);
     }
-
-
   };
-
-  // function addCurrGame (name, table) {
-  //   let date = new Date()
-  //   let obj = {wha:date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate(), name:name, score : 10000}
-  //   table.push(obj)
-  //   return table
-  // }
-
 
   const handleNext = (currQues, fetchTable) => {
- 
-    if (currQues+1 === Object.keys(questions).length) {
-      // setTable(addCurrGame(name, table))
-      // TODO send result to spreadsheet
-      sendData(name, score, () => navigate("/result"))
+    if (currQues + 1 === Object.keys(questions).length) {
+      navigate("/loader")
+      sendData(name, score, () => navigate("/result"));
       console.log(1);
-      
-      // fetch(result).then(() => navigate("/result"))
-      
-    } else  {
+      // navigate("/result")
+    } else {
       setCurrQues(currQues + 1);
       setSelected();
-    } 
+    }
   };
 
-
-  const handleHelp50 = (currQues)=>{
-    
-    let options = Array.from(document.querySelectorAll(".singleOption"))
-    if(options.length ===2 ||maxHelp===0){
-      return}
-    maxHelp--
-    let random
-    let counter = 0
-    let deselect = []
-    while(counter<2){
-      random = Math.floor(Math.random() * 3) + 1
-      if(questions[currQues].correct_answer !== options[random].innerText &&
-        !deselect.includes(random)){
-        deselect.push(random)
-        counter ++
+  const handleHelp50 = (currQues) => {
+    let options = Array.from(document.querySelectorAll(".singleOption"));
+    if (options.length === 2 || maxHelp === 0) {
+      return;
+    }
+    maxHelp--;
+    let random;
+    let counter = 0;
+    let deselect = [];
+    while (counter < 2) {
+      random = Math.floor(Math.random() * 3) + 1;
+      if (
+        questions[currQues].correct_answer !== options[random].innerText &&
+        !deselect.includes(random)
+      ) {
+        deselect.push(random);
+        counter++;
       }
     }
 
     for (let index = 0; index < 2; index++) {
-      options[deselect[index]].disabled="true"
+      options[deselect[index]].disabled = "true";
     }
 
-    setSelected()
-  }
+    setSelected();
+  };
 
-
-  const renderer = ({seconds, completed }) => {
+  const renderer = ({ seconds, completed }) => {
     if (completed) {
-        let istimerOver = true
-        handleCheck(questions[currQues].correct_answer, currQues, istimerOver)
-        
-        
+      let istimerOver = true;
+      handleCheck(questions[currQues].correct_answer, currQues, istimerOver);
+
       return;
     } else {
       // Render a countdown
-      return (
-        <span>
-          {seconds}
-        </span>
-      );
+      return <span>{seconds}</span>;
     }
   };
 
@@ -139,37 +115,44 @@ const Question = ({
       <div className="singleQuestion">
         <span>
           Time to answe:
-          {<Countdown
-            key={Date.now() + 100000}
-            date={Date.now() + 100000}
-            renderer={renderer}
-            autoStart={true}
-
-              />}
+          {
+            <Countdown
+              key={Date.now() + 7000}
+              date={Date.now() + 7000}
+              renderer={renderer}
+              autoStart={true}
+            />
+          }
         </span>
-      
+
         <h2>{questions[currQues].question}</h2>
-        
-        <div className="options" >
+
+        <div className="options">
           {options &&
             options.map((i) => (
               <button
                 className={`singleOption  ${selected && handleSelect(i)}`}
                 key={i}
-                onClick={() => {handleCheck(i, currQues)}}
-                disabled={selected}>
+                onClick={() => {
+                  handleCheck(i, currQues);
+                }}
+                disabled={selected}
+              >
                 {i}
               </button>
-            )
-            )}
-              <button className="helpOption" type="image" 
-                onClick={() => {handleHelp50(currQues, options)}}>
-                50:50 <br></br> You have {maxHelp} life lines left
-              </button>
-
-        </div>
+            ))}
+          <button
+            className="helpOption"
+            type="image"
+            onClick={() => {
+              handleHelp50(currQues, options);
+            }}
+          >
+            50:50 <br></br> You have {maxHelp} life lines left
+          </button>
         </div>
       </div>
+    </div>
   );
 };
 

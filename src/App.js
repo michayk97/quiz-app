@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Footer } from "./components/Footer/Footer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import axios from "axios";
+import Loader from "./Pages/Home/FallBack/Loader";
 
 function App() {
   const [name, setName] = useState();
@@ -15,30 +16,16 @@ function App() {
   const [table, setTable] = useState();
 
   const fetchQuestions = async () => {
-    const { data } = await axios.get("https://opentdb.com/api.php?amount=5");
+    const { data } = await axios.get("https://opentdb.com/api.php?amount=20");
     setQuestions(data.results);
   };
 
   const fetchTable = async () => {
     const url =
-      "https://gsx2json.com/api?id=1Ods-VtLk9CpM3wR2SwSZywLmJphAyrjUL7vsldFUvOE&sheet=test";
+      "https://gsx2json.com/api?id=1Ods-VtLk9CpM3wR2SwSZywLmJphAyrjUL7vsldFUvOE&sheet=quizgame";
     const { data } = await axios.get(url);
     setTable(data.rows);
   };
-
-  // const url = 'https://script.google.com/macros/s/AKfycbyzZgsQmkx11Iok2Z0gpZsPydmC4tRpb4cMJIYS7E_NdRFzY8yU04qaC_LN-9GIKNLGyg/exec'
-
-  // const sendData = (name, score) => {
-  //   let date = new Date()
-  //   const dataForm = new FormData()
-  //   dataForm.append('date', date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate())
-  //   dataForm.append('name', name)
-  //   dataForm.append('scores', score)
-  //   fetch(url,{
-  //     method:"POST",
-  //     body: dataForm
-  //   }).then(rep=>rep.json()).then(data=>{console.log(data)})
-  // }
 
   return (
     <BrowserRouter>
@@ -72,18 +59,8 @@ function App() {
               />
             }
           />
-          <Route
-            exact
-            path="/result"
-            element={
-              <Result
-                lastScore={score}
-                // name={name}
-                // table={table}
-                // setTable={setTable}
-              />
-            }
-          />
+          <Route exact path="/result" element={<Result lastScore={score} />} />
+          <Route exact path="/loader" element={<Loader />} />
         </Routes>
       </div>
       <Footer />
