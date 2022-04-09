@@ -7,9 +7,6 @@ import { CircularProgress } from "@material-ui/core";
 import { Fireworks } from 'fireworks-js/dist/react'
 
 
-const url =
-  "https://script.google.com/macros/s/AKfycbyzZgsQmkx11Iok2Z0gpZsPydmC4tRpb4cMJIYS7E_NdRFzY8yU04qaC_LN-9GIKNLGyg/exec";
-
 const colNames = ["Date", "Name", "Score"];
 
 const Result = ({ lastScore }) =>

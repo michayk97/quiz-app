@@ -8,6 +8,8 @@ import { CircularProgress } from "@material-ui/core";
 const url =
   "https://script.google.com/macros/s/AKfycbyzZgsQmkx11Iok2Z0gpZsPydmC4tRpb4cMJIYS7E_NdRFzY8yU04qaC_LN-9GIKNLGyg/exec";
 
+
+  //Updated the database with the current game info
 const sendData = (name, score, cb) => {
   let date = new Date();
   const dataForm = new FormData();
@@ -40,12 +42,14 @@ const Question = ({
 
   const navigate = useNavigate();
 
+  //handles user choice of an answer
   const handleSelect = (i) => {
     if (selected === i && selected === correct) return "select";
     else if (selected === i && selected !== correct) return "wrong";
     else if (i === correct) return "select";
   };
 
+  //checks users answer, adds to the score
   const handleCheck = (i, currQues, isTimerOver) => {
     setTimeout(() => {
       handleNext(currQues);
@@ -57,7 +61,7 @@ const Question = ({
       else if (questions[currQues].difficulty === "hard") setScore(score + 3);
     }
   };
-
+  
   const handleNext = (currQues, fetchTable) => {
     if (currQues + 1 === Object.keys(questions).length) {
       navigate("/loader")
@@ -96,7 +100,7 @@ const Question = ({
 
     setSelected();
   };
-
+  
   const renderer = ({ seconds, completed }) => {
     if (completed) {
       let istimerOver = true;
