@@ -2,8 +2,22 @@ import { useState } from "react";
 import {useNavigate} from "react-router-dom"
 import "./Question.css";
 import Countdown from 'react-countdown';
-import { Button } from "@material-ui/core";
-import React, { Component }  from 'react';
+import React from 'react';
+
+const url = 'https://script.google.com/macros/s/AKfycbyzZgsQmkx11Iok2Z0gpZsPydmC4tRpb4cMJIYS7E_NdRFzY8yU04qaC_LN-9GIKNLGyg/exec'
+
+const sendData = (name, score, cb) => {
+  console.log('name', name);
+  let date = new Date()
+  const dataForm = new FormData()
+  dataForm.append('date', date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate())
+  dataForm.append('name', name)
+  dataForm.append('scores', 10000)
+  fetch(url,{
+    method:"POST",
+    body: dataForm
+  }).then(cb)
+}
 
 let maxHelp = 1;
 const Question = ({
@@ -13,7 +27,9 @@ const Question = ({
   options,
   correct,
   setScore,
+  name,
   score,
+  setTable,
   table
 }) => {
   const [selected, setSelected] = useState();
@@ -39,11 +55,34 @@ const Question = ({
 
     } 
 
+    function addCurrGame (name, table) {
+      let date = new Date()
+      let obj = {wha:date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate(), name:name, score : 10000}
+      table.push(obj)
+      return table
+    }
+
+
   };
+
+  // function addCurrGame (name, table) {
+  //   let date = new Date()
+  //   let obj = {wha:date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate(), name:name, score : 10000}
+  //   table.push(obj)
+  //   return table
+  // }
+
+
   const handleNext = (currQues, fetchTable) => {
-    if (currQues+1 == Object.keys(questions).length) {
+ 
+    if (currQues+1 === Object.keys(questions).length) {
+      // setTable(addCurrGame(name, table))
+      // TODO send result to spreadsheet
+      sendData(name, score, () => navigate("/result"))
+      console.log(1);
       
-      navigate("/result");
+      // fetch(result).then(() => navigate("/result"))
+      
     } else  {
       setCurrQues(currQues + 1);
       setSelected();
@@ -55,7 +94,6 @@ const Question = ({
     
     let options = Array.from(document.querySelectorAll(".singleOption"))
     if(options.length ===2 ||maxHelp===0){
-      console.log("shot")
       return}
     maxHelp--
     let random

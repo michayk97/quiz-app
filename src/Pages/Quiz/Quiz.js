@@ -4,7 +4,7 @@ import './Quiz.css'
 import Question from "../../components/Question/Question"
 import React  from 'react';
 
-const Quiz = ({ name, questions, score, setScore, setQuestions }) => {
+const Quiz = ({ name, questions, score, setScore}) => {
   const [options, setOptions] = useState()
   const [currQues, setCurrQues] = useState(0)
  
@@ -19,7 +19,6 @@ const Quiz = ({ name, questions, score, setScore, setQuestions }) => {
     );
   }, [currQues, questions]);
 
-  console.log(questions);
 
   const handleShuffle = (options) => {
     return options.sort(() => Math.random() - 0.5);
@@ -44,6 +43,7 @@ const Quiz = ({ name, questions, score, setScore, setQuestions }) => {
               </div>
               <Question
                 currQues={currQues}
+                name={name}
                 setCurrQues={setCurrQues}
                 questions={questions}
                 options={options}

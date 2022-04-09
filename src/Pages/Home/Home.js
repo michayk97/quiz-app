@@ -21,6 +21,7 @@ const Home = ({name, setName, fetchQuestions, fetchTable}) => {
       navigate("/quiz")
     }
   }
+  
 
 
 
